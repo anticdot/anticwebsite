@@ -544,7 +544,37 @@ svg {
   letter-spacing:.13em;
   font-size:10px;
   font-weight:700;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   margin:18px 0 8px
+}
+.member-add {
+  width:24px;
+  height:24px;
+  display:grid;
+  place-items:center;
+  border:1px solid #3b3c3f;
+  border-radius:6px;
+  background:#1b1c1f;
+  color:#e4e4e2;
+  font-size:17px;
+  line-height:1;
+  cursor:pointer;
+  transition:background .18s ease, border-color .18s ease, transform .18s ease
+}
+.member-add:hover {
+  background:#303135;
+  border-color:#77797d;
+  transform:translateY(-1px)
+}
+.member-add:focus-visible {
+  outline:2px solid #d9dad8;
+  outline-offset:2px
+}
+.member-add:disabled {
+  opacity:.55;
+  cursor:wait
 }
 .member {
   display:flex;

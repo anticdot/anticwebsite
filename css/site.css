@@ -213,7 +213,7 @@ a {
   width:min(640px,100%);
   height:380px;
   position:relative;
-  transform:translateY(var(--lift, 0px)) rotateY(var(--tilt-y, 0deg)) rotateX(var(--tilt-x, 0deg));
+  transform:translate3d(var(--move-x, 0px), calc(var(--move-y, 0px) + var(--lift, 0px)), 0) rotateY(var(--tilt-y, 0deg)) rotateX(var(--tilt-x, 0deg));
   transform-style:preserve-3d;
   backface-visibility:hidden;
   will-change:transform;

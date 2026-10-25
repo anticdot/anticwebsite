@@ -165,6 +165,25 @@ export default {
         await sql`INSERT INTO group_members (group_id, user_id) VALUES (${created[0].group_id}, ${user.user_id})`;
         return json({ group: created[0] }, 201);
       }
+      if (path === "group/members" && method === "POST") {
+        assertSameOrigin(request);
+        const groupId = Number(url.searchParams.get("groupId"));
+        if (!Number.isSafeInteger(groupId) || groupId < 1) throw new HttpError(400, "Ungültige Gruppe.");
+        await requireMembership(sql, groupId, user.user_id);
+        const body = await parseJson(request);
+        const displayName = String(body.displayName || "").normalize("NFKC").trim();
+        if (!/^[\p{L}\p{N}_. -]{2,24}$/u.test(displayName)) throw new HttpError(400, "Bitte gib einen gültigen Anzeigenamen ein.");
+        const normalized = displayName.toLocaleLowerCase("en-US");
+        const matches = await sql`SELECT user_id, username FROM users WHERE username_normalized = ${normalized}`;
+        if (!matches.length) throw new HttpError(404, "Kein Antic-Konto mit diesem Anzeigenamen gefunden.");
+        const added = await sql`
+          INSERT INTO group_members (group_id, user_id)
+          VALUES (${groupId}, ${matches[0].user_id})
+          ON CONFLICT (group_id, user_id) DO NOTHING
+          RETURNING user_id`;
+        if (!added.length) throw new HttpError(409, "Diese Person ist bereits Mitglied der Gruppe.");
+        return json({ member: { display_name: matches[0].username, is_owner: isOwner(matches[0].username) } }, 201);
+      }
       if (path === "group/members" && method === "GET") {
         const groupId = Number(url.searchParams.get("groupId"));
         if (!Number.isSafeInteger(groupId) || groupId < 1) throw new HttpError(400, "Ungültige Gruppe.");

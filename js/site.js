@@ -7,25 +7,26 @@ menuButton?.addEventListener("click", () => {
   navLinks?.classList.toggle("open", !expanded);
 });
 
-const preview = document.querySelector(".visual");
 const previewCard = document.querySelector(".device");
-const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-if (preview && previewCard && finePointer.matches && !reducedMotion.matches) {
-  preview.addEventListener("pointermove", (event) => {
-    const bounds = preview.getBoundingClientRect();
-    const x = (event.clientX - bounds.left) / bounds.width - 0.5;
-    const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+if (previewCard && !reducedMotion.matches) {
+  previewCard.addEventListener("pointermove", (event) => {
+    if (event.pointerType === "touch") return;
+    const bounds = previewCard.getBoundingClientRect();
+    const x = Math.max(-0.5, Math.min(0.5, (event.clientX - bounds.left) / bounds.width - 0.5));
+    const y = Math.max(-0.5, Math.min(0.5, (event.clientY - bounds.top) / bounds.height - 0.5));
 
-    previewCard.style.setProperty("--tilt-x", `${(-y * 5).toFixed(2)}deg`);
-    previewCard.style.setProperty("--tilt-y", `${(x * 7).toFixed(2)}deg`);
-    previewCard.style.setProperty("--lift", "-5px");
+    previewCard.style.setProperty("--tilt-x", `${(-y * 12).toFixed(2)}deg`);
+    previewCard.style.setProperty("--tilt-y", `${(x * 14).toFixed(2)}deg`);
+    previewCard.style.setProperty("--move-x", `${(x * 12).toFixed(2)}px`);
+    previewCard.style.setProperty("--move-y", `${(y * 10).toFixed(2)}px`);
+    previewCard.style.setProperty("--lift", "-8px");
   });
 
-  preview.addEventListener("pointerleave", () => {
-    previewCard.style.removeProperty("--tilt-x");
-    previewCard.style.removeProperty("--tilt-y");
-    previewCard.style.removeProperty("--lift");
+  previewCard.addEventListener("pointerleave", () => {
+    for (const property of ["--tilt-x", "--tilt-y", "--move-x", "--move-y", "--lift"]) {
+      previewCard.style.removeProperty(property);
+    }
   });
 }

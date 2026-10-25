@@ -4,6 +4,7 @@ const $ = (selector) => document.querySelector(selector);
 const toast = $("#toast");
 const authBackdrop = $("#authBackdrop");
 const downloadBackdrop = $("#downloadBackdrop");
+const inviteBackdrop = $("#inviteBackdrop");
 
 function endpoint(path, params = {}) {
   const url = new URL(API, location.origin);
@@ -210,8 +211,8 @@ $("#switchMode").addEventListener("click", () => {
   updateOwnerField();
 });
 $("#closeAuth").addEventListener("click", () => authBackdrop.classList.remove("open"));
-for (const backdrop of [authBackdrop, downloadBackdrop]) backdrop.addEventListener("click", (event) => { if (event.target === backdrop) backdrop.classList.remove("open"); });
-document.addEventListener("keydown", (event) => { if (event.key === "Escape") { authBackdrop.classList.remove("open"); downloadBackdrop.classList.remove("open"); } });
+for (const backdrop of [authBackdrop, downloadBackdrop, inviteBackdrop]) backdrop.addEventListener("click", (event) => { if (event.target === backdrop) backdrop.classList.remove("open"); });
+document.addEventListener("keydown", (event) => { if (event.key === "Escape") { authBackdrop.classList.remove("open"); downloadBackdrop.classList.remove("open"); inviteBackdrop.classList.remove("open"); } });
 $("#authForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const authForm = event.currentTarget;
@@ -240,6 +241,37 @@ async function createGroup() {
     if (created) setActiveGroup(created);
   } catch (error) { showToast(error.message); }
 }
+function openInvite() {
+  if (!state.user) return showToast("Melde dich an, um Mitglieder hinzuzufügen.");
+  if (!state.activeGroupId) return showToast("Wähle zuerst eine Gruppe aus.");
+  inviteBackdrop.classList.add("open");
+  window.setTimeout(() => $("#inviteDisplayName").focus(), 50);
+}
+$("#inviteMemberButton").addEventListener("click", openInvite);
+$("#closeInvite").addEventListener("click", () => inviteBackdrop.classList.remove("open"));
+$("#inviteForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const inviteForm = event.currentTarget;
+  const submit = $("#inviteSubmit");
+  const displayName = $("#inviteDisplayName").value.trim();
+  if (!state.activeGroupId) return showToast("Wähle zuerst eine Gruppe aus.");
+  submit.disabled = true;
+  try {
+    const data = await request("group/members", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ displayName })
+    }, { groupId: state.activeGroupId });
+    inviteBackdrop.classList.remove("open");
+    inviteForm.reset();
+    await loadGroupContent();
+    showToast(`${data.member.display_name} wurde zur Gruppe hinzugefügt.`);
+  } catch (error) {
+    showToast(error.message);
+  } finally {
+    submit.disabled = false;
+  }
+});
 $("#messageForm").addEventListener("submit", async (event) => {
   event.preventDefault();
   const input = $("#messageInput");
