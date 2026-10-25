@@ -14,7 +14,9 @@ body {
   margin:0;
   background:var(--bg);
   color:var(--white);
-  font-family:'DM Sans',sans-serif
+  font-family:Inter, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
 }
 a {
   color:inherit;
@@ -58,7 +60,7 @@ a {
   display:grid;
   place-items:center;
   background:linear-gradient(145deg,#303135,#17181a);
-  font:700 18px 'Space Grotesk';
+  font:700 18px Inter, "Segoe UI", system-ui, sans-serif;
   letter-spacing:-2px
 }
 .logo img {
@@ -67,14 +69,14 @@ a {
   object-fit:contain
 }
 .brand b {
-  font:700 19px 'Space Grotesk';
+  font:700 19px Inter, "Segoe UI", system-ui, sans-serif;
   letter-spacing:.08em
 }
 .links {
   display:flex;
   align-items:center;
   gap:29px;
-  font-size:12px;
+  font-size:13px;
   color:#c4c5c6
 }
 .links a:hover {
@@ -104,7 +106,7 @@ a {
   padding:0 0 35px 2px
 }
 .eyebrow {
-  font-size:10px;
+  font-size:11px;
   text-transform:uppercase;
   letter-spacing:.2em;
   color:#aeb0b1;
@@ -120,7 +122,7 @@ a {
   background:#d4d5d4
 }
 .hero h1 {
-  font:700 clamp(46px,5.6vw,78px)/.94 'Space Grotesk',sans-serif;
+  font:700 clamp(46px,5.6vw,78px)/.94 Inter, "Segoe UI", system-ui, sans-serif;
   letter-spacing:-.065em;
   margin:24px 0 22px;
   max-width:610px
@@ -176,7 +178,7 @@ a {
 .hero-note {
   margin-top:21px;
   color:#838588;
-  font-size:10px;
+  font-size:11px;
   letter-spacing:.02em
 }
 .visual {
@@ -211,7 +213,11 @@ a {
   width:min(640px,100%);
   height:380px;
   position:relative;
-  transform:rotateY(-7deg) rotateX(2deg);
+  transform:translateY(var(--lift, 0px)) rotateY(var(--tilt-y, 0deg)) rotateX(var(--tilt-x, 0deg));
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  will-change:transform;
+  transition:transform 180ms cubic-bezier(.2,.7,.2,1);
   border:1px solid #737579;
   border-radius:14px;
   background:linear-gradient(145deg,#27282b,#141517 75%);
@@ -227,8 +233,12 @@ a {
   gap:8px;
   background:#202124
 }
+.preview-context {
+  font-size:9px;
+  color:#b8b9bb;
+}
 .tinylogo {
-  font:700 12px 'Space Grotesk';
+  font:700 12px Inter, "Segoe UI", system-ui, sans-serif;
   margin-right:10px
 }
 .top-dot {
@@ -259,7 +269,7 @@ a {
   display:grid;
   place-items:center;
   color:#eee;
-  font:700 9px 'Space Grotesk'
+  font:700 9px Inter, "Segoe UI", system-ui, sans-serif
 }
 .d-icon.on {
   background:#e4e4e2;
@@ -271,14 +281,14 @@ a {
   padding:15px 10px
 }
 .d-small {
-  font-size:8px;
+  font-size:9px;
   color:#85868a;
   letter-spacing:.1em;
   text-transform:uppercase;
   margin:2px 4px 9px
 }
 .d-channel {
-  font-size:9px;
+  font-size:10px;
   color:#b7b8b9;
   padding:8px 7px;
   border-radius:5px
@@ -294,7 +304,7 @@ a {
 .d-title {
   border-bottom:1px solid #38393c;
   padding-bottom:11px;
-  font:600 10px 'Space Grotesk';
+  font:600 11px Inter, "Segoe UI", system-ui, sans-serif;
   color:#e4e4e2
 }
 .bubble {
@@ -332,7 +342,7 @@ a {
   border:1px solid #454649;
   border-radius:5px;
   color:#77787c;
-  font-size:8px;
+  font-size:9px;
   padding:9px
 }
 .d-members {
@@ -340,7 +350,7 @@ a {
   border-left:1px solid #343538
 }
 .member-head {
-  font-size:7px;
+  font-size:8px;
   letter-spacing:.1em;
   color:#85868a;
   margin-bottom:12px
@@ -351,7 +361,7 @@ a {
   align-items:center;
   gap:6px;
   color:#babbbe;
-  font-size:8px
+  font-size:9px
 }
 .mini-member i {
   width:16px;
@@ -373,7 +383,7 @@ a {
 }
 .device-tag strong {
   display:block;
-  font:600 12px 'Space Grotesk';
+  font:600 12px Inter, "Segoe UI", system-ui, sans-serif;
   margin-bottom:4px
 }
 .stats {
@@ -391,7 +401,7 @@ a {
   padding:16px 6px 0
 }
 .stat b {
-  font:500 13px 'Space Grotesk';
+  font:500 13px Inter, "Segoe UI", system-ui, sans-serif;
   display:block;
   margin-bottom:5px
 }
