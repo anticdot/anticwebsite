@@ -12,10 +12,16 @@ function endpoint(path, params = {}) {
   for (const [key, value] of Object.entries(params)) url.searchParams.set(key, value);
   return url.toString();
 }
-function showToast(message) {
+let toastTimer;
+function showToast(message, type = "info") {
+  window.clearTimeout(toastTimer);
   toast.textContent = message;
+  toast.dataset.type = type;
+  toast.style.setProperty("--toast-duration", "4200ms");
+  toast.classList.remove("show");
+  void toast.offsetWidth;
   toast.classList.add("show");
-  window.setTimeout(() => toast.classList.remove("show"), 3200);
+  toastTimer = window.setTimeout(() => toast.classList.remove("show"), 4200);
 }
 async function request(path, options = {}, params = {}) {
   const response = await fetch(endpoint(path, params), { credentials: "same-origin", ...options });
@@ -265,9 +271,9 @@ $("#inviteForm").addEventListener("submit", async (event) => {
     inviteBackdrop.classList.remove("open");
     inviteForm.reset();
     await loadGroupContent();
-    showToast(`${data.member.display_name} wurde zur Gruppe hinzugefügt.`);
+    showToast(`${data.member.display_name} wurde zur Gruppe hinzugefügt.`, "success");
   } catch (error) {
-    showToast(error.message);
+    showToast(error.message, "error");
   } finally {
     submit.disabled = false;
   }

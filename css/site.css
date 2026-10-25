@@ -213,16 +213,41 @@ a {
   width:min(640px,100%);
   height:380px;
   position:relative;
-  transform:translate3d(var(--move-x, 0px), calc(var(--move-y, 0px) + var(--lift, 0px)), 0) rotateY(var(--tilt-y, 0deg)) rotateX(var(--tilt-x, 0deg));
+  transform:translate3d(var(--move-x, 0px), calc(var(--move-y, 0px) + var(--lift, 0px)), 0) rotateY(var(--tilt-y, 0deg)) rotateX(var(--tilt-x, 0deg)) scale(var(--card-scale, 1));
   transform-style:preserve-3d;
+  transform-origin:center center;
   backface-visibility:hidden;
   will-change:transform;
-  transition:transform 180ms cubic-bezier(.2,.7,.2,1);
+  transition:transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease, border-color 260ms ease;
   border:1px solid #737579;
   border-radius:14px;
   background:linear-gradient(145deg,#27282b,#141517 75%);
   box-shadow:28px 38px 90px #0009,0 0 50px #c1c1c11a;
-  overflow:hidden
+overflow:hidden
+}
+.device::after {
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
+  opacity:0;
+  background:radial-gradient(circle at var(--pointer-x, 50%) var(--pointer-y, 50%), #ffffff20, transparent 44%);
+  transition:opacity 220ms ease
+}
+.device.is-following {
+  border-color:#a1a2a5;
+  box-shadow:20px 34px 100px #000b, 0 0 55px #c1c1c125
+}
+.device.is-following::after {
+  opacity:.85
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+  .visual:hover .device:not(.is-following) {
+    transform:translate3d(0,-7px,0) rotateY(-4deg) rotateX(2deg) scale(1.012);
+    border-color:#8b8c90;
+    box-shadow:20px 34px 95px #000b, 0 0 44px #c1c1c120
+  }
 }
 .device-top {
   height:40px;
