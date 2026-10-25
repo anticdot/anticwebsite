@@ -18,7 +18,9 @@ body {
   margin:0;
   background:var(--bg);
   color:var(--white);
-  font:14px 'DM Sans',sans-serif;
+  font:14px Inter, "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
   min-height:100vh
 }
 button,input {
@@ -68,7 +70,7 @@ svg {
   border-radius:9px;
   display:grid;
   place-items:center;
-  font:700 16px 'Space Grotesk';
+  font:700 16px Inter, "Segoe UI", system-ui, sans-serif;
   letter-spacing:-2px;
   background:linear-gradient(145deg,#292a2d,#17181a);
   box-shadow:inset 0 1px #ffffff14
@@ -79,7 +81,7 @@ svg {
   object-fit:contain
 }
 .wordmark {
-  font:600 17px 'Space Grotesk';
+  font:600 17px Inter, "Segoe UI", system-ui, sans-serif;
   letter-spacing:.07em
 }
 .wordmark span {
@@ -91,7 +93,7 @@ svg {
   align-items:center;
   gap:9px;
   color:#d9d9d7;
-  font:500 14px 'Space Grotesk'
+  font:500 14px Inter, "Segoe UI", system-ui, sans-serif
 }
 .top-title .slash {
   color:#666
@@ -181,7 +183,7 @@ svg {
   background:#e9e9e7
 }
 .rail-icon.active {
-  font:600 15px 'Space Grotesk'
+  font:600 15px Inter, "Segoe UI", system-ui, sans-serif
 }
 .rail-sep {
   width:26px;
@@ -311,13 +313,13 @@ svg {
   align-items:center;
   gap:11px;
   border-bottom:1px solid #2b2c2f;
-  font:500 14px 'Space Grotesk'
+  font:500 14px Inter, "Segoe UI", system-ui, sans-serif
 }
 .channel-head svg {
   color:#939497
 }
 .head-meta {
-  font:12px 'DM Sans';
+  font:12px Inter, "Segoe UI", system-ui, sans-serif;
   color:#77787c;
   margin-left:3px
 }
@@ -347,7 +349,7 @@ svg {
   right:31px;
   top:-32px;
   color:#ffffff07;
-  font:700 150px 'Space Grotesk'
+  font:700 150px Inter, "Segoe UI", system-ui, sans-serif
 }
 .eyebrow {
   font-size:10px;
@@ -357,7 +359,7 @@ svg {
   font-weight:700
 }
 .welcome h1 {
-  font:500 22px 'Space Grotesk';
+  font:500 22px Inter, "Segoe UI", system-ui, sans-serif;
   letter-spacing:-.04em;
   margin:8px 0 6px
 }
@@ -501,7 +503,7 @@ svg {
   overflow:auto
 }
 .right-title {
-  font:500 14px 'Space Grotesk';
+  font:500 14px Inter, "Segoe UI", system-ui, sans-serif;
   margin:0 0 16px
 }
 .privacy-card {
@@ -522,7 +524,7 @@ svg {
   margin-bottom:13px
 }
 .privacy-card h3 {
-  font:500 14px 'Space Grotesk';
+  font:500 14px Inter, "Segoe UI", system-ui, sans-serif;
   margin:0 0 6px
 }
 .privacy-card p {
@@ -655,7 +657,7 @@ svg {
 }
 .modal h2 {
   text-align:center;
-  font:500 23px 'Space Grotesk';
+  font:500 23px Inter, "Segoe UI", system-ui, sans-serif;
   letter-spacing:-.04em;
   margin:0 0 8px
 }
