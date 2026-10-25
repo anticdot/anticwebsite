@@ -214,12 +214,13 @@ for (const backdrop of [authBackdrop, downloadBackdrop]) backdrop.addEventListen
 document.addEventListener("keydown", (event) => { if (event.key === "Escape") { authBackdrop.classList.remove("open"); downloadBackdrop.classList.remove("open"); } });
 $("#authForm").addEventListener("submit", async (event) => {
   event.preventDefault();
+  const authForm = event.currentTarget;
   const payload = { displayName: $("#displayName").value.trim(), password: $("#password").value, ownerKey: $("#ownerKey").value };
   try {
     const data = await request(`auth/${state.signup ? "register" : "login"}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
     setUser(data.user);
     authBackdrop.classList.remove("open");
-    event.currentTarget.reset();
+    authForm.reset();
     $("#ownerKeyField").hidden = true;
     await loadGroups();
     showToast(`${state.signup ? "Konto erstellt" : "Angemeldet"}: ${data.user.displayName}`);
